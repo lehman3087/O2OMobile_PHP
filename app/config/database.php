@@ -53,7 +53,7 @@ return array(
 		),
             'mysql' => array(
                 'driver'    => 'mysql',
-            'host'      => 'localhost',
+            'host'      => '114.215.82.219',
             'database'  => 'yilushun',
             'username'  => 'xfe2',
             'password'  => 'xfe123456',

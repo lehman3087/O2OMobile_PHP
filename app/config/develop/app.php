@@ -1,5 +1,5 @@
 <?php
 
 return array(
-    'url' => 'http://yilushun.a-caggie.cn/',
+    'url' => 'http://yilushun.fangxincanzhuo365.cn/',
 );

@@ -21,7 +21,7 @@ return array(
     'connections' => array(
 
         'mysql' => array(
-            'host'      => 'localhost',
+            'host'      => '114.215.82.219',
             'database'  => 'yilushun',
             'username'  => 'xfe2',
             'password'  => 'xfe123456',
