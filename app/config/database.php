@@ -51,17 +51,16 @@ return array(
 			'database' => __DIR__.'/../database/production.sqlite',
 			'prefix'   => '',
 		),
-
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => '<Your information>',
-            'database'  => '<Your information>',
-            'username'  => '<Your information>',
-            'password'  => '<Your information>',
-			'charset'   => 'utf8',
+            'mysql' => array(
+                'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'yilushun',
+            'username'  => 'xfe2',
+            'password'  => 'xfe123456',
+           'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => 'o2omobile_',
-		),
+        ),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',

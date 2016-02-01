@@ -1,5 +1,5 @@
 <?php
 
 return array(
-    'url' => 'http://dev.o2omobile.cn/',
+    'url' => 'http://yilushun.a-caggie.cn/',
 );

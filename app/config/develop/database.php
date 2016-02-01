@@ -21,10 +21,10 @@ return array(
     'connections' => array(
 
         'mysql' => array(
-            'host'      => '<Your information>',
-            'database'  => '<Your information>',
-            'username'  => '<Your information>',
-            'password'  => '<Your information>',
+            'host'      => 'localhost',
+            'database'  => 'yilushun',
+            'username'  => 'xfe2',
+            'password'  => 'xfe123456',
             'prefix'    => 'o2omobile_',
         ),
     ),
