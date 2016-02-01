@@ -285,6 +285,87 @@ class OrderlistController extends BaseController {
                    );
         return $this->json($return);
     }
+     /*
+     * 所有路线
+     * @return json
+     */
+    public function postRoutes(){
+        $location        = Input::get('location');
+        $pageSize        = Input::get('count', 10);
+        $sort_by         = Input::get('sort_by', self::TIME_DESC);
+        $limit           = $pageSize + 1;
+        $offset          = '';
+        $hasMore         = 0;
+        $total           = 0;
+        $orderWhere = '`O`.`order_status` = '.Orders::OS_PUBLISHED;
+        //按页码分页
+        if (Input::has('by_no')) {
+            $page = abs(Input::get('by_no', 1));
+            $page > 1 || $page = 1;
+            $offset = ' OFFSET '. $pageSize * ($page - 1);
+        //按id分页，
+        } elseif (Input::has('by_id')) {
+            $lastId   = Input::get('by_id');
+            if ($lastId > 0) {
+                $orderWhere .= ' AND `O`.`id` < ' . $lastId;
+            }
+        }
+
+        if($sort_by == self::PRICE_DESC){           //价格降序排列
+            $orderBy = ' ORDER BY `O`.`offer_price` DESC';
+        }elseif($sort_by == self::PRICE_ASC){       //价格升序排列
+            $orderBy = ' ORDER BY `O`.`offer_price` ASC';
+        }elseif($sort_by == self::TIME_DESC){       //时间排序
+            $orderBy = ' ORDER BY `O`.`created_at` DESC';
+        }elseif($sort_by == self::LOCATION_ASC){    //按照距离有近到远排序
+            $orderBy = " ORDER BY GetDistance({$location['lat']}, {$location['lon']}, `O`.`lat`, `O`.`lon`)  ASC";
+        }elseif($sort_by == self::RANK_DESC){       //评价从高到低
+            $orderBy = ' ORDER BY `O`.`rank` DESC';
+        }elseif($sort_by == self::RANK_ASC){        //评价从低到高
+            $orderBy = ' ORDER BY `O`.`rank` ASC';
+        }
+
+        $squares = returnSquarePoint($location['lon'], $location['lat']);
+
+        $sql = "SELECT *
+                     FROM `o2omobile_orders` AS `O`
+                     WHERE $orderWhere  AND `O`.`lat`<>0
+                     AND `O`.`lat`>{$squares['right-bottom']['lat']}
+                     AND `O`.`lat`<{$squares['left-top']['lat']}
+                     AND `O`.`lon`>{$squares['left-top']['lon']}
+                     AND `O`.`lon`<{$squares['right-bottom']['lon']}
+                     AND `O`.deleted_at is NULL
+                     $orderBy
+                     LIMIT $limit
+                     $offset";
+        $orderIds = DB::select($sql);
+        // print_r($orderIds);exit;
+        $collection = new Collection;
+        foreach ($orderIds as $order) {
+            $collection->add(with(new Orders)->fill((array)$order));
+        }
+
+        $orders = array();
+        if (!empty($collection)) {
+            if (count($collection) > $pageSize) {
+                $hasMore = 1;
+                $collection->pop();//弹出最后一条
+            }
+            //格式化
+            foreach ($collection as $order) {
+                $orders[] = $order->formatToApi();
+            }
+        }//endif
+
+        $return = array(
+                    'total'  => $total,
+                    'count'  => count($orders) < $pageSize ? count($orders) : $pageSize,
+                    'more'   => $hasMore,
+                    'orders' => $orders,
+                   );
+        return $this->json($return);
+        
+    }
 
 
 }
