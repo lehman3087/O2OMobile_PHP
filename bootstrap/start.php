@@ -34,9 +34,9 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(function()
 {
     if (!isset($_SERVER['HTTP_HOST'])) {
-        $_SERVER['HTTP_HOST'] = 'yilushun.a-caggie.cn';
+        $_SERVER['HTTP_HOST'] = 'yilushun.fangxincanzhuo365.cn';
     }
-    if (in_array($_SERVER['HTTP_HOST'], array('yilushun.a-caggie.cn'))) {
+    if (in_array($_SERVER['HTTP_HOST'], array('yilushun.fangxincanzhuo365.cn'))) {
         return 'develop';
     }
     if (in_array($_SERVER['HTTP_HOST'], array('demo.o2omobile.com', 'demo.o2omobile.com.cn', 'demo.o2omobile.net'))) {
