@@ -105,6 +105,7 @@ class Orders extends Eloquent {
                 'transaction_price'  => $this->transaction_price,       // 成交价格
                 'service_type'       => $service_type,            // 服务类型
                 'location'           => apiLocation($this->location),   // 服务地点
+                'to'           => apiLocation($this->to),   // 终点
                 'rank'               => $this->rank,   
                 'accept_time'        => apiTime($this->accept_time),             //接单时间
                 'push_number'        => $this->push_number,                 //推送个数
