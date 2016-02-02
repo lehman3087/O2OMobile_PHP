@@ -105,7 +105,7 @@ class OrderController extends BaseController {
         $order->service_type        = Input::get('service_type_id', '');
 
         $order->location = json_encode(Input::get('location', array()));
-        $order->to=  json_encode(Input::get('to_location'),array());
+      //  $order->to=  json_encode(Input::get('to_location'),array());
 
         $order->default_receiver_id    = Input::get('default_receiver_id', 0);   //指定服务人 有就只推送给这个人 没有就推送给附近的人
 
